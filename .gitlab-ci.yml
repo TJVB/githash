@@ -5,6 +5,7 @@ stages:
   - prepare # prepare the cache
   - check # check the codestyles
   - test
+  - report
 
 prepare_cache:
   stage: prepare
@@ -90,7 +91,7 @@ test_php80:
     - prepare_cache
 
 CodeQuality:
-  stage: Code quality converter
+  stage: report
   dependencies:
     - phpstan
   script:

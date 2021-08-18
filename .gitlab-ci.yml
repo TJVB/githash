@@ -94,6 +94,9 @@ CodeQuality:
   stage: report
   dependencies:
     - phpstan
+    - prepare_cache
+  needs:
+    - prepare_cache
   script:
     - vendor/bin/converter convert --phpstan --phpstan-json-file=phpstan.json
   artifacts:

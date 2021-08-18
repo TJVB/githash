@@ -1,0 +1,60 @@
+{
+    "name": "tjvb/githash",
+    "type": "library",
+    "description": "Get the current git hash from your project.",
+    "keywords": [
+        "tjvb",
+        "githash"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias van Beek",
+            "email": "t.vanbeek@tjvb.nl",
+            "homepage": "https://www.tjvb.nl"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "beechit/json-to-code-climate-subset-converter": "^1.6",
+        "fakerphp/faker": "^1.15",
+        "phpmd/phpmd": "^2.10",
+        "phpstan/phpstan": "^0.12.94",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6",
+        "symfony/process": "^5.3"
+    },
+    "suggest": {
+        "symfony/process": "Used rather than `shell_exec` if available (tested with ^5.3)."
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "TJVB\\GitHash\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TJVB\\GitHash\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "format": "vendor/bin/phpcbf",
+        "test": "vendor/bin/phpunit --no-coverage",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "support": {
+        "issues": "https://gitlab.com/tjvb/githash/-/issues",
+        "source": "https://gitlab.com/tjvb/githash/-/tree/master"
+    },
+    "funding": [
+        {
+            "type": "paypal",
+            "url": "https://paypal.me/tvbeek"
+        }
+    ]
+}

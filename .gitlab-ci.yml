@@ -1,0 +1,101 @@
+# set the default docker image
+image: registry.gitlab.com/tjvb/phpimages:php80
+
+stages:
+  - prepare # prepare the cache
+  - check # check the codestyles
+  - test
+
+prepare_cache:
+  stage: prepare
+  script:
+    # Install composer
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar validate
+    - php composer.phar install
+  # we use this artifact for all the jobs
+  artifacts:
+    name: "vendor"
+    paths:
+      - vendor/*
+
+lint:
+  stage: check
+  script:
+    # lint recursive
+    - find src/ -type f -name '*.php' -exec php -l {} \; | (! grep -v "No syntax errors detected" )
+  dependencies: []
+
+phpcs:
+  stage: check
+  script:
+    - vendor/bin/phpcs
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+
+phpmd:
+  stage: check
+  script:
+    - vendor/bin/phpmd src/ text phpmd.xml.dist
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+
+phpstan:
+  stage: check
+  script:
+    # check for phpstan errors
+    - php -d memory_limit=500M vendor/bin/phpstan analyse --error-format=gitlab > phpstan.json
+    - cat phpstan.json
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+  artifacts:
+    paths:
+      - phpstan.json
+    when: always
+
+test_lowest:
+  stage: test
+  script:
+    # Install composer
+    - rm -f composer.lock
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar update --prefer-lowest
+    - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml
+  artifacts:
+    reports:
+      junit: phpunitresult/junit.xml
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+
+test_php80:
+  stage: test
+  script:
+    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml
+    - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
+  artifacts:
+    reports:
+      junit: phpunitresult/junit.xml
+      cobertura: phpunitresult/cobertura-coverage.xml
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+
+CodeQuality:
+  stage: Code quality converter
+  dependencies:
+    - phpstan
+  script:
+    - vendor/bin/converter convert --phpstan --phpstan-json-file=phpstan.json
+  artifacts:
+    reports:
+      codequality: code-climate.json
+    when: always

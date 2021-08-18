@@ -1,0 +1,11 @@
+/.phpunit.result.cache
+/.phpunit.cache
+/build/
+/vendor/
+/code-climate.json
+/composer.lock
+/phpcs.xml
+/phpmd.xml
+/phpstan.json
+/phpstan.neon
+/phpunit.xml

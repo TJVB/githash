@@ -16,7 +16,7 @@ final class GitShellExecCommandHashFinder implements GitHashFinder
     public function findHash(string $path): GitHash
     {
         if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
-            $path = $path . DIRECTORY_SEPARATOR;
+            $path .= DIRECTORY_SEPARATOR;
         }
         $command = 'git --git-dir=' . $path . '.git --work-tree=' . $path . ' rev-parse HEAD';
         $output = shell_exec($command);

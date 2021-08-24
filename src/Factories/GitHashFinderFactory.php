@@ -6,12 +6,14 @@ namespace TJVB\GitHash\Factories;
 
 use TJVB\GitHash\Contracts\FinderFactory;
 use TJVB\GitHash\Contracts\GitHashFinder;
+use TJVB\GitHash\HashFinders\GitFileSystemHashFinder;
 use TJVB\GitHash\HashFinders\GitProcessCommandHashFinder;
 use TJVB\GitHash\HashFinders\GitShellExecCommandHashFinder;
 
 final class GitHashFinderFactory implements FinderFactory
 {
     private array $finders = [];
+
     public function register(GitHashFinder $finder): void
     {
         $this->finders[] = $finder;
@@ -21,6 +23,7 @@ final class GitHashFinderFactory implements FinderFactory
     {
         $this->register(new GitProcessCommandHashFinder());
         $this->register(new GitShellExecCommandHashFinder());
+        $this->register(new GitFileSystemHashFinder());
     }
 
     public function getRegisteredFinders(): array

@@ -9,5 +9,5 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 class TestCase extends BaseTestCase
 {
 
-
+    public const PROJECT_ROOT = __DIR__ . DIRECTORY_SEPARATOR . '..';
 }

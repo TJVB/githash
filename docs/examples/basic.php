@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use TJVB\GitHash\Exceptions\GitHashException;
 use TJVB\GitHash\Factories\GitHashFinderFactory;
-use TJVB\GitHash\Retriever\Retriever;
+use TJVB\GitHash\Retrievers\Retriever;
 
 require_once 'vendor/autoload.php';
 

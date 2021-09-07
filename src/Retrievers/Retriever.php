@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TJVB\GitHash\Retriever;
+namespace TJVB\GitHash\Retrievers;
 
 use TJVB\GitHash\Contracts\FinderFactory;
 use TJVB\GitHash\Contracts\GitHashRetriever;

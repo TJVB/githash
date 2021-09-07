@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TJVB\GitHash\Retriever;
 
-use Exception;
 use TJVB\GitHash\Contracts\FinderFactory;
 use TJVB\GitHash\Contracts\GitHashRetriever;
 use TJVB\GitHash\Exceptions\GitHashException;
@@ -12,11 +11,16 @@ use TJVB\GitHash\Values\GitHash;
 
 final class Retriever implements GitHashRetriever
 {
-
     private ?FinderFactory $finderFactory = null;
+
     public function setFinderFactory(FinderFactory $finderFactory): void
     {
         $this->finderFactory = $finderFactory;
+    }
+
+    public function getFinderFactory(): ?FinderFactory
+    {
+        return $this->finderFactory;
     }
 
     public function getHash(string $path): GitHash

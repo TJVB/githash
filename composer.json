@@ -43,7 +43,17 @@
         }
     },
     "scripts": {
+        "check-all": [
+            "@format",
+            "@codestyle",
+            "@test-coverage",
+            "@phpstan",
+            "@phpmd"
+        ],
+        "codestyle": "vendor/bin/phpcs",
         "format": "vendor/bin/phpcbf",
+        "phpstan": "vendor/bin/phpstan",
+        "phpmd": "vendor/bin/phpmd src/ text phpmd.xml.dist",
         "test": "vendor/bin/phpunit --no-coverage",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },

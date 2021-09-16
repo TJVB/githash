@@ -7,10 +7,11 @@ namespace Tjvb\GitHash\Tests\HashFinders;
 use TJVB\GitHash\Exceptions\GitHashException;
 use TJVB\GitHash\HashFinders\GitFileSystemHashFinder;
 use TJVB\GitHash\HashFinders\GitProcessCommandHashFinder;
+use TJVB\GitHash\HashFinders\GitShellExecCommandHashFinder;
 use TJVB\GitHash\Tests\TestCase;
 use TJVB\GitHash\Values\GitHash;
 
-class GitProcessCommandHashFinderTest extends TestCase
+class GitShellExecCommandHashFinderTest extends TestCase
 {
 
     /**
@@ -21,7 +22,7 @@ class GitProcessCommandHashFinderTest extends TestCase
         // setup / mock
 
         // run
-        $finder = new GitProcessCommandHashFinder();
+        $finder = new GitShellExecCommandHashFinder();
 
         // verify/assert
         $this->assertTrue($finder->isAvailable());
@@ -35,7 +36,7 @@ class GitProcessCommandHashFinderTest extends TestCase
         // setup / mock
 
         // run
-        $finder = new GitProcessCommandHashFinder();
+        $finder = new GitShellExecCommandHashFinder();
         $result = $finder->findHash(self::PROJECT_ROOT);
 
         // verify/assert
@@ -51,26 +52,11 @@ class GitProcessCommandHashFinderTest extends TestCase
         // setup / mock
 
         // run
-        $finder = new GitProcessCommandHashFinder();
+        $finder = new GitShellExecCommandHashFinder();
         $result = $finder->findHash(self::PROJECT_ROOT);
 
         // verify/assert
         // @TODO work with a fixed git directory to get a fixed hash
         $this->assertInstanceOf(GitHash::class, $result);
-    }
-
-    /**
-     * @test
-     */
-    public function weCantFindAHashIfTheDirectoryIsNotPartOfAGitRepository(): void
-    {
-        // setup / mock
-        $this->expectException(GitHashException::class);
-
-        // run
-        $finder = new GitProcessCommandHashFinder();
-        $finder->findHash(sys_get_temp_dir());
-
-        // verify/assert
     }
 }

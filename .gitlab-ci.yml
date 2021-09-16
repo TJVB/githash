@@ -79,6 +79,8 @@ test_lowest:
 test_php80:
   stage: test
   script:
+    - git status
+    - git log -1
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   artifacts:

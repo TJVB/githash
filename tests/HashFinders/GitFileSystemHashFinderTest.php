@@ -29,7 +29,6 @@ class GitFileSystemHashFinderTest extends TestCase
      */
     public function weCanFindAHashFromTheRepositoryRoot(): void
     {
-        $this->markTestIncomplete('Doesn\'t yet work in the CI');
         // setup / mock
 
         // run

@@ -4,7 +4,8 @@
     "description": "Get the current git hash from your project.",
     "keywords": [
         "tjvb",
-        "githash"
+        "githash",
+        "hash"
     ],
     "license": "MIT",
     "authors": [

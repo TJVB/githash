@@ -2,6 +2,15 @@
 
 This package is intended to give a usefull option
 
+## Usage
+```php
+try {
+    $retriever = Retriever::getWithFactory(GitHashFinderFactory::withDefaultFinders());
+    echo $retriever->getHash($path)->hash() . PHP_EOL;
+} catch (GitHashException $exception) {
+    echo 'Failed to get the hash ' .  $exception->getMessage() . PHP_EOL;
+}
+```
 
 ## Examples
 See docs/examples for examples about how to use this package.

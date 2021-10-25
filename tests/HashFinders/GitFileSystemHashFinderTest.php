@@ -10,6 +10,9 @@ use TJVB\GitHash\HashFinders\GitProcessCommandHashFinder;
 use TJVB\GitHash\Tests\TestCase;
 use TJVB\GitHash\Values\GitHash;
 
+/**
+ * @group branch-needed
+ */
 class GitFileSystemHashFinderTest extends TestCase
 {
     /**

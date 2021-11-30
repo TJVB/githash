@@ -13,10 +13,10 @@ stages:
     - EXCLUDE_GROUP=""
     - |
         if [ -z "$CI_COMMIT_BRANCH" ]; then
-        EXCLUDE_GROUP=-"--exclude-group=branch-needed"
-      else
-        git checkout $CI_COMMIT_BRANCH
-      fi
+          EXCLUDE_GROUP=-"--exclude-group=branch-needed"
+        else
+          git checkout $CI_COMMIT_BRANCH
+        fi
 
 prepare_cache:
   stage: prepare

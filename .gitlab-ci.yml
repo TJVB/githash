@@ -7,6 +7,17 @@ stages:
   - test
   - report
 
+# This is a default before script that is used for all jobs that need to have the composer scripts installed
+.set_exclude_group: &set_exclude_group
+  before_script:
+    - EXCLUDE_GROUP=""
+    - |
+        if [ -z "$CI_COMMIT_BRANCH" ]; then
+        EXCLUDE_GROUP=-"--exclude-group=branch-needed"
+      else
+        git checkout $CI_COMMIT_BRANCH
+      fi
+
 prepare_cache:
   stage: prepare
   script:
@@ -62,13 +73,14 @@ phpstan:
 
 test_lowest:
   stage: test
+  <<: *set_exclude_group
   script:
     - git checkout $CI_COMMIT_BRANCH
     # Install composer
     - rm -f composer.lock
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar update --prefer-lowest
-    - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml
+    - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
   artifacts:
     reports:
       junit: phpunitresult/junit.xml
@@ -79,9 +91,9 @@ test_lowest:
 
 test_php80:
   stage: test
+  <<: *set_exclude_group
   script:
-    - git checkout $CI_COMMIT_BRANCH
-    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml
+    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   artifacts:
     reports:

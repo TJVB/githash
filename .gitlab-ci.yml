@@ -29,6 +29,7 @@ prepare_cache:
   artifacts:
     name: "vendor"
     paths:
+      - composer.phar
       - vendor/*
 
 lint:
@@ -90,6 +91,23 @@ test_lowest:
     - prepare_cache
 
 test_php80:
+  stage: test
+  <<: *set_exclude_group
+  script:
+    - php composer.phar install
+    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
+    - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
+  artifacts:
+    reports:
+      junit: phpunitresult/junit.xml
+      cobertura: phpunitresult/cobertura-coverage.xml
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+
+test_php81:
+  image: registry.gitlab.com/tjvb/phpimages:php81
   stage: test
   <<: *set_exclude_group
   script:

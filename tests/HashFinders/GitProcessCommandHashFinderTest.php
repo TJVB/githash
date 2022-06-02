@@ -12,7 +12,6 @@ use TJVB\GitHash\Values\GitHash;
 
 class GitProcessCommandHashFinderTest extends TestCase
 {
-
     /**
      * @test
      */

@@ -11,7 +11,6 @@ use TJVB\GitHash\Values\GitHash;
 
 final class GitFileSystemHashFinder implements GitHashFinder
 {
-
     public const GIT_DIRECTORY = '.git';
     public const HEAD_FILE = 'HEAD';
 

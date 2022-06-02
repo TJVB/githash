@@ -13,7 +13,6 @@ use TJVB\GitHash\Values\GitHash;
 
 class GitShellExecCommandHashFinderTest extends TestCase
 {
-
     /**
      * @test
      */

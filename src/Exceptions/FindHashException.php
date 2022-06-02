@@ -6,6 +6,4 @@ namespace TJVB\GitHash\Exceptions;
 
 class FindHashException extends GitHashException
 {
-
-
 }

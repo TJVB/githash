@@ -10,7 +10,6 @@ use TJVB\GitHash\Values\GitHash;
 
 class GitHashTest extends TestCase
 {
-
     /**
      * @test
      */

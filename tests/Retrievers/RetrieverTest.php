@@ -13,7 +13,6 @@ use TJVB\GitHash\Values\GitHash;
 
 class RetrieverTest extends TestCase
 {
-
     /**
      * @test
      */

@@ -31,7 +31,10 @@
         "symfony/process": "Used rather than `shell_exec` if available (tested with ^5.3)."
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -66,6 +69,10 @@
         {
             "type": "paypal",
             "url": "https://paypal.me/tvbeek"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/tvbeek/"
         }
     ]
 }

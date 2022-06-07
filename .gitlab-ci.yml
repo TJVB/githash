@@ -97,6 +97,7 @@ test_php80:
     - php composer.phar install
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
+  coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
     reports:
       junit: phpunitresult/junit.xml
@@ -115,6 +116,7 @@ test_php81:
   script:
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
+  coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
     reports:
       junit: phpunitresult/junit.xml

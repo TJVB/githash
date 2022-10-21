@@ -79,7 +79,6 @@ test_lowest:
     - git checkout $CI_COMMIT_BRANCH
     # Install composer
     - rm -f composer.lock
-    - curl -sS https://getcomposer.org/installer | php
     - php composer.phar update --prefer-lowest
     - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
   artifacts:
@@ -114,6 +113,7 @@ test_php81:
   stage: test
   <<: *set_exclude_group
   script:
+    - php composer.phar install
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
@@ -133,6 +133,7 @@ test_php82:
   stage: test
   <<: *set_exclude_group
   script:
+    - php composer.phar install
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   coverage:  '/^\s*Lines:\s*\d+.\d+\%/'

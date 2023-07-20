@@ -5,12 +5,14 @@
 [![Pipeline status](https://gitlab.com/tjvb/githash/badges/master/pipeline.svg)](https://gitlab.com/tjvb/githash/-/pipelines?page=1&scope=all&ref=master)
 [![Coverage report](https://gitlab.com/tjvb/githash/badges/master/coverage.svg)](https://gitlab.com/tjvb/githash/-/pipelines?page=1&scope=all&ref=master)
 [![Tested on PHP 8.0 to 8.2](https://img.shields.io/badge/Tested%20on-PHP%208.0%20|%208.1%20|%208.2-brightgreen.svg?maxAge=2419200)](https://gitlab.com/tjvb/githash/-/pipelines?page=1&scope=all&ref=master)
-    [![Latest Unstable Version](http://poser.pugx.org/tjvb/githash/v/unstable)](https://packagist.org/packages/tjvb/githash)
+[![Latest Unstable Version](http://poser.pugx.org/tjvb/githash/v/unstable)](https://packagist.org/packages/tjvb/githash)
+
 
 [![PHP Version Require](http://poser.pugx.org/tjvb/githash/require/php)](https://packagist.org/packages/tjvb/githash)
 [![PHPMD](https://img.shields.io/badge/PHPMD-checked-brightgreen.svg)](https://gitlab.com/tjvb/githash/-/blob/master/phpmd.xml.dist)
 [![PHPStan](https://img.shields.io/badge/PHPStan-checked-brightgreen.svg)](https://gitlab.com/tjvb/githash/-/blob/master/phpstan.neon.dist)
 [![PHPCS](https://img.shields.io/badge/PHPCS-PSR12-brightgreen.svg)](https://gitlab.com/tjvb/githash/-/blob/master/phpcs.xml.dist)
+
 
 [![License](http://poser.pugx.org/tjvb/githash/license)](https://packagist.org/packages/tjvb/githash)
 

@@ -14,6 +14,7 @@ final class GitProcessCommandHashFinder implements GitHashFinder
 {
     /**
      * @inheritDoc
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function findHash(string $path): GitHash
     {

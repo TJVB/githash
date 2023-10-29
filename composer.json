@@ -1,13 +1,13 @@
 {
     "name": "tjvb/githash",
-    "type": "library",
     "description": "Get the current git hash from your project.",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "tjvb",
         "githash",
         "hash"
     ],
-    "license": "MIT",
     "authors": [
         {
             "name": "Tobias van Beek",
@@ -15,52 +15,6 @@
             "homepage": "https://www.tjvb.nl"
         }
     ],
-    "require": {
-        "php": "^8.0 || ^8.1 || ^8.2"
-    },
-    "require-dev": {
-        "beechit/json-to-code-climate-subset-converter": "^1.6",
-        "fakerphp/faker": "^1.15",
-        "phpmd/phpmd": "^2.10",
-        "phpstan/phpstan": "^0.12.94",
-        "phpunit/phpunit": "^9.5",
-        "squizlabs/php_codesniffer": "^3.6",
-        "symfony/process": "^5.3"
-    },
-    "suggest": {
-        "symfony/process": "Used rather than `shell_exec` if available (tested with ^5.3)."
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "infection/extension-installer": true
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "TJVB\\GitHash\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "TJVB\\GitHash\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "check-all": [
-            "@format",
-            "@codestyle",
-            "@test-coverage",
-            "@phpstan",
-            "@phpmd"
-        ],
-        "codestyle": "vendor/bin/phpcs",
-        "format": "vendor/bin/phpcbf",
-        "phpstan": "vendor/bin/phpstan",
-        "phpmd": "vendor/bin/phpmd src/ text phpmd.xml.dist",
-        "test": "vendor/bin/phpunit --no-coverage",
-        "test-coverage": "vendor/bin/phpunit --coverage-html build/coverage"
-    },
     "support": {
         "issues": "https://gitlab.com/tjvb/githash/-/issues",
         "source": "https://gitlab.com/tjvb/githash/-/tree/master"
@@ -73,6 +27,76 @@
         {
             "type": "github",
             "url": "https://github.com/sponsors/tvbeek/"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/TJVB"
         }
-    ]
+    ],
+    "require": {
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.15",
+        "infection/infection": "^0.27.6",
+        "phpmd/phpmd": "^2.10",
+        "phpstan/phpstan": "^0.12.94",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6",
+        "symfony/process": "^5.3"
+    },
+    "suggest": {
+        "symfony/process": "Used rather than `shell_exec` if available (tested with ^5.3)."
+    },
+    "autoload": {
+        "psr-4": {
+            "TJVB\\GitHash\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TJVB\\GitHash\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "analyse": [
+            "@phpstan",
+            "@phpmd"
+        ],
+        "analyze": "@analyse",
+        "check": [
+            "@cs-fix",
+            "@test-coverage",
+            "@analyse",
+            "@infection"
+        ],
+        "check-all": "@check",
+        "cs": "vendor/bin/phpcs",
+        "cs-fix": "vendor/bin/phpcbf",
+        "codestyle": "@cs",
+        "format": "@cs-fix",
+        "infection": "vendor/bin/infection",
+        "phpmd": "vendor/bin/phpmd src/ text phpmd.xml.dist",
+        "phpstan": "vendor/bin/phpstan",
+        "test": "vendor/bin/phpunit --no-coverage",
+        "test-coverage": "vendor/bin/phpunit --coverage-html build/coverage"
+    },
+    "scripts-descriptions": {
+        "analyse": "Run the analyse steps (PHPStan and PHPMD)",
+        "analyze": "See analyse",
+        "check": "Runs @analyse, @cs-fix, @test-coverage and @infection.",
+        "cs": "Check the codestyle with ecs.",
+        "cs-fix": "Check the codestyle with ecs and if possible fix the found issues.",
+        "infection": "Run infection.",
+        "phpmd": "Analyse the code with PHPMD",
+        "phpstan": "Analyse the code with PHPStan.",
+        "test": "Run the PHPUnit tests without coverage.",
+        "test-coverage": "Run the PHPUnit tests with coverage."
+    }
 }

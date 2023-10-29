@@ -94,6 +94,7 @@ test:
           - 80
           - 81
           - 82
+          - 83
   image: registry.gitlab.com/tjvb/phpimages:php$PHP
   <<: *set_exclude_group
   script:

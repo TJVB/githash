@@ -21,16 +21,29 @@ stages:
 prepare_cache:
   stage: prepare
   script:
-    # Install composer
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar validate
-    - php composer.phar install
+    - composer validate
+    - composer install
   # we use this artifact for all the jobs
   artifacts:
     name: "vendor"
     paths:
-      - composer.phar
       - vendor/*
+
+phpstan:
+  stage: check
+  script:
+    # check for phpstan errors
+    - php -d memory_limit=500M vendor/bin/phpstan analyse --error-format=gitlab | tee phpstan.json
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+  artifacts:
+    paths:
+      - phpstan.json
+    reports:
+      codequality: phpstan.json
+    when: always
 
 lint:
   stage: check
@@ -57,21 +70,6 @@ phpmd:
   needs:
     - prepare_cache
 
-phpstan:
-  stage: check
-  script:
-    # check for phpstan errors
-    - php -d memory_limit=500M vendor/bin/phpstan analyse --error-format=gitlab > phpstan.json
-    - cat phpstan.json
-  dependencies:
-    - prepare_cache
-  needs:
-    - prepare_cache
-  artifacts:
-    paths:
-      - phpstan.json
-    when: always
-
 test_lowest:
   stage: test
   <<: *set_exclude_group
@@ -79,7 +77,7 @@ test_lowest:
     - git checkout $CI_COMMIT_BRANCH
     # Install composer
     - rm -f composer.lock
-    - php composer.phar update --prefer-lowest
+    - composer update --prefer-lowest
     - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
   artifacts:
     reports:
@@ -89,11 +87,17 @@ test_lowest:
   needs:
     - prepare_cache
 
-test_php80:
-  stage: test
+test:
+  parallel:
+    matrix:
+      - PHP:
+          - 80
+          - 81
+          - 82
+  image: registry.gitlab.com/tjvb/phpimages:php$PHP
   <<: *set_exclude_group
   script:
-    - php composer.phar install
+    - composer install
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
@@ -107,55 +111,3 @@ test_php80:
     - prepare_cache
   needs:
     - prepare_cache
-
-test_php81:
-  image: registry.gitlab.com/tjvb/phpimages:php81
-  stage: test
-  <<: *set_exclude_group
-  script:
-    - php composer.phar install
-    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
-    - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
-  coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
-  artifacts:
-    reports:
-      junit: phpunitresult/junit.xml
-      coverage_report:
-        coverage_format: cobertura
-        path: phpunitresult/cobertura-coverage.xml
-  dependencies:
-    - prepare_cache
-  needs:
-    - prepare_cache
-
-test_php82:
-  image: registry.gitlab.com/tjvb/phpimages:php82
-  stage: test
-  <<: *set_exclude_group
-  script:
-    - php composer.phar install
-    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
-    - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
-  coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
-  artifacts:
-    reports:
-      junit: phpunitresult/junit.xml
-      coverage_report:
-        coverage_format: cobertura
-        path: phpunitresult/cobertura-coverage.xml
-  dependencies:
-    - prepare_cache
-  needs:
-    - prepare_cache
-
-CodeQuality:
-  stage: report
-  dependencies:
-    - phpstan
-    - prepare_cache
-  script:
-    - vendor/bin/converter convert --phpstan --phpstan-json-file=phpstan.json
-  artifacts:
-    reports:
-      codequality: code-climate.json
-    when: always

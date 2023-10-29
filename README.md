@@ -16,7 +16,7 @@
 
 [![License](https://poser.pugx.org/tjvb/githash/license)](https://packagist.org/packages/tjvb/githash)
 
-This package is intended to give a usefull option for getting the hash from the current commit.
+This package is intended to give a useful option for getting the hash from the current commit.
 
 ## Usage
 ```php

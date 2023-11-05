@@ -78,8 +78,10 @@ test_lowest:
     # Install composer
     - rm -f composer.lock
     - composer update --prefer-lowest
-    - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
+    - vendor/bin/phpunit --coverage-text --colors=never --log-junit=phpunitresult/junit.xml --testdox-html=phpunitresult/testdox.html $EXCLUDE_GROUP
   artifacts:
+    paths:
+      - phpunitresult
     reports:
       junit: phpunitresult/junit.xml
   dependencies:
@@ -112,3 +114,20 @@ test:
     - prepare_cache
   needs:
     - prepare_cache
+
+combine_docs:
+  stage: report
+  script:
+    - rm docs/*.php
+    - cp README.md docs/README.md
+    - cp CHANGELOG.md docs/CHANGELOG.md
+    - cp CONTRIBUTING.md docs/CONTRIBUTING.md
+    - cp LICENSE.md docs/LICENSE.md
+    - cp phpunitresult/testdox.html docs/testdox.html
+  artifacts:
+    paths:
+      - docs/
+  dependencies:
+    - test_lowest
+  needs:
+    - test_lowest

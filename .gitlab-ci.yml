@@ -118,7 +118,6 @@ test:
 combine_docs:
   stage: report
   script:
-    - rm docs/*.php
     - cp README.md docs/README.md
     - cp CHANGELOG.md docs/CHANGELOG.md
     - cp CONTRIBUTING.md docs/CONTRIBUTING.md

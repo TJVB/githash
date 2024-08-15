@@ -52,23 +52,52 @@ lint:
     - find src/ -type f -name '*.php' -exec php -l {} \; | (! grep -v "No syntax errors detected" )
   dependencies: []
 
-phpcs:
+phpmd:
   stage: check
   script:
-    - vendor/bin/phpcs
+    - composer phpmd
   dependencies:
     - prepare_cache
   needs:
     - prepare_cache
 
-phpmd:
+code-style:
   stage: check
   script:
-    - vendor/bin/phpmd src/ text phpmd.xml.dist
+    - composer cs
   dependencies:
     - prepare_cache
   needs:
     - prepare_cache
+
+# We check the content with vale
+vale:
+  image:
+    name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/jdkato/vale
+    entrypoint: [""]
+  stage: check
+  script:
+    - /bin/vale --config=tools/vale/.vale.ini docs README.md
+  needs: []
+  dependencies: []
+
+
+infection:
+  stage: test
+  image: registry.gitlab.com/tjvb/phpimages:php83
+  script:
+    - composer update
+    - composer infection
+  dependencies:
+    - prepare_cache
+  needs:
+    - prepare_cache
+  artifacts:
+    paths:
+      - build/infection/
+    reports:
+      codequality: build/infection/code-climate-gitlab.json
+    when: always
 
 test_lowest:
   stage: test

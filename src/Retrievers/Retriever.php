@@ -13,6 +13,13 @@ final class Retriever implements GitHashRetriever
 {
     private ?FinderFactory $finderFactory = null;
 
+    public static function getWithFactory(FinderFactory $finderFactory): Retriever
+    {
+        $retriever = new self();
+        $retriever->setFinderFactory($finderFactory);
+        return $retriever;
+    }
+
     public function setFinderFactory(FinderFactory $finderFactory): void
     {
         $this->finderFactory = $finderFactory;
@@ -34,13 +41,6 @@ final class Retriever implements GitHashRetriever
             }
         }
         throw new GitHashException('No finder available');
-    }
-
-    public static function getWithFactory(FinderFactory $finderFactory): Retriever
-    {
-        $retriever = new self();
-        $retriever->setFinderFactory($finderFactory);
-        return $retriever;
     }
 
     public function getHashAndIgnoreFailures(string $path): GitHash

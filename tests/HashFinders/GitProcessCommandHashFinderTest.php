@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tjvb\GitHash\Tests\HashFinders;
 
 use TJVB\GitHash\Exceptions\GitHashException;
-use TJVB\GitHash\HashFinders\GitFileSystemHashFinder;
 use TJVB\GitHash\HashFinders\GitProcessCommandHashFinder;
 use TJVB\GitHash\Tests\TestCase;
 use TJVB\GitHash\Values\GitHash;

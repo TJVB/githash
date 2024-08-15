@@ -52,7 +52,7 @@ If you use Laravel you can use [tjvb/laravel-githash](https://gitlab.com/tjvb/la
 We (try to) document all the changes in [CHANGELOG](CHANGELOG.md) so read it for more information.
 
 ## Contributing
-You are very welcome to contribute, read about it in [CONTRIBUTING](CONTRIBUTING.md)
+You are welcome to contribute, read about it in [CONTRIBUTING](CONTRIBUTING.md)
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

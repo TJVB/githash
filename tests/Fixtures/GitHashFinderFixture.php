@@ -8,7 +8,7 @@ use TJVB\GitHash\Contracts\GitHashFinder;
 use TJVB\GitHash\Exceptions\GitHashException;
 use TJVB\GitHash\Values\GitHash;
 
-class GitHashFinderFixture implements GitHashFinder
+final class GitHashFinderFixture implements GitHashFinder
 {
     public ?GitHash $gitHash = null;
 

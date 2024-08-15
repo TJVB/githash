@@ -10,15 +10,13 @@ use TJVB\GitHash\HashFinders\GitProcessCommandHashFinder;
 use TJVB\GitHash\Tests\TestCase;
 use TJVB\GitHash\Values\GitHash;
 
-class GitProcessCommandHashFinderTest extends TestCase
+final class GitProcessCommandHashFinderTest extends TestCase
 {
     /**
      * @test
      */
     public function weSeeThatTheFinderIsAvailable(): void
     {
-        // setup / mock
-
         // run
         $finder = new GitProcessCommandHashFinder();
 
@@ -31,8 +29,6 @@ class GitProcessCommandHashFinderTest extends TestCase
      */
     public function weCanFindAHashFromTheRepositoryRoot(): void
     {
-        // setup / mock
-
         // run
         $finder = new GitProcessCommandHashFinder();
         $result = $finder->findHash(self::PROJECT_ROOT);
@@ -47,8 +43,6 @@ class GitProcessCommandHashFinderTest extends TestCase
      */
     public function weCanFindAHashFromASubDirectory(): void
     {
-        // setup / mock
-
         // run
         $finder = new GitProcessCommandHashFinder();
         $result = $finder->findHash(self::PROJECT_ROOT);
@@ -63,13 +57,11 @@ class GitProcessCommandHashFinderTest extends TestCase
      */
     public function weCantFindAHashIfTheDirectoryIsNotPartOfAGitRepository(): void
     {
-        // setup / mock
+        // verify/assert
         $this->expectException(GitHashException::class);
 
         // run
         $finder = new GitProcessCommandHashFinder();
         $finder->findHash(sys_get_temp_dir());
-
-        // verify/assert
     }
 }

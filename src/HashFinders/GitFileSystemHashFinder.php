@@ -29,7 +29,7 @@ final class GitFileSystemHashFinder implements GitHashFinder
 
         $branchRefContent = $this->getBranchRefContentFromHeadContent($headContent, $path);
 
-        return new GitHash(trim($branchRefContent));
+        return new GitHash($branchRefContent);
     }
 
     public function isAvailable(): bool
@@ -67,7 +67,7 @@ final class GitFileSystemHashFinder implements GitHashFinder
      */
     private function getBranchRefContentFromHeadContent(string $headContent, string $path): string
     {
-        $headContentParts = explode(':', $headContent, 2);
+        $headContentParts = explode(':', $headContent);
         if (!isset($headContentParts[1])) {
             throw new GitHashException(
                 'HEAD File isn\'t complete'

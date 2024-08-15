@@ -8,7 +8,7 @@ use Faker\Factory;
 use TJVB\GitHash\Tests\TestCase;
 use TJVB\GitHash\Values\GitHash;
 
-class GitHashTest extends TestCase
+final class GitHashTest extends TestCase
 {
     /**
      * @test
@@ -29,6 +29,25 @@ class GitHashTest extends TestCase
     /**
      * @test
      */
+    public function weGetAShort(): void
+    {
+        // setup / mock
+        $faker = Factory::create();
+        $hash = $faker->sha1();
+        $size = 8; // this is the default size
+
+        // run
+        $gitHash = new GitHash($hash);
+        $short = $gitHash->short();
+
+        // verify/assert
+        $this->assertSame(strlen($short), $size);
+        $this->assertStringStartsWith($short, $hash);
+    }
+
+    /**
+     * @test
+     */
     public function weGetAShortForTheWantedLength(): void
     {
         // setup / mock
@@ -42,7 +61,7 @@ class GitHashTest extends TestCase
 
         // verify/assert
         $this->assertSame(strlen($short), $size);
-        $this->assertStringContainsString($short, $hash);
+        $this->assertStringStartsWith($short, $hash);
     }
 
     /**

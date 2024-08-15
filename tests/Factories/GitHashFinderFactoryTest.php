@@ -8,15 +8,13 @@ use TJVB\GitHash\Factories\GitHashFinderFactory;
 use TJVB\GitHash\Tests\Fixtures\GitHashFinderFixture;
 use TJVB\GitHash\Tests\TestCase;
 
-class GitHashFinderFactoryTest extends TestCase
+final class GitHashFinderFactoryTest extends TestCase
 {
     /**
      * @test
      */
     public function theFactoryDoesNotHaveAnyFinderByDefault(): void
     {
-        // setup / mock
-
         // run
         $factory = new GitHashFinderFactory();
         $finders = $factory->getRegisteredFinders();
@@ -49,8 +47,6 @@ class GitHashFinderFactoryTest extends TestCase
      */
     public function weCanRegisterDefaultFindersOnAFactory(): void
     {
-        // setup / mock
-
         // run
         $factory = new GitHashFinderFactory();
         $factory->registerDefaultFinders();
@@ -58,6 +54,7 @@ class GitHashFinderFactoryTest extends TestCase
 
         // verify/assert
         $this->assertNotEmpty($finders);
+        $this->assertCount(3, $finders);
     }
 
     /**
@@ -65,8 +62,6 @@ class GitHashFinderFactoryTest extends TestCase
      */
     public function weCanInstantiateWithTheDefaultFinders(): void
     {
-        // setup / mock
-
         // run
         $factory = GitHashFinderFactory::withDefaultFinders();
         $finders = $factory->getRegisteredFinders();

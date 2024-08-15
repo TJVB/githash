@@ -14,6 +14,13 @@ final class GitHashFinderFactory implements FinderFactory
 {
     private array $finders = [];
 
+    public static function withDefaultFinders(): GitHashFinderFactory
+    {
+        $factory = new self();
+        $factory->registerDefaultFinders();
+        return $factory;
+    }
+
     public function register(GitHashFinder $finder): void
     {
         $this->finders[] = $finder;
@@ -29,12 +36,5 @@ final class GitHashFinderFactory implements FinderFactory
     public function getRegisteredFinders(): array
     {
         return $this->finders;
-    }
-
-    public static function withDefaultFinders(): GitHashFinderFactory
-    {
-        $factory = new self();
-        $factory->registerDefaultFinders();
-        return $factory;
     }
 }

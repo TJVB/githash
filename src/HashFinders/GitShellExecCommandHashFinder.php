@@ -33,6 +33,6 @@ final class GitShellExecCommandHashFinder implements GitHashFinder
         }
         // shell_exec is a function that is more then once disabled on system.
         $disabled = explode(',', ini_get('disable_functions'));
-        return !in_array('shell_exec', $disabled);
+        return !in_array('shell_exec', $disabled, true);
     }
 }

@@ -52,19 +52,19 @@ lint:
     - find src/ -type f -name '*.php' -exec php -l {} \; | (! grep -v "No syntax errors detected" )
   dependencies: []
 
-phpcs:
+phpmd:
   stage: check
   script:
-    - vendor/bin/phpcs
+    - composer phpmd
   dependencies:
     - prepare_cache
   needs:
     - prepare_cache
 
-phpmd:
+code-style:
   stage: check
   script:
-    - vendor/bin/phpmd src/ text phpmd.xml.dist
+    - composer cs
   dependencies:
     - prepare_cache
   needs:

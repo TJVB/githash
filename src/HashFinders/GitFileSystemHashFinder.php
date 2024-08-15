@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TJVB\GitHash\HashFinders;
 
-use Exception;
 use TJVB\GitHash\Contracts\GitHashFinder;
 use TJVB\GitHash\Exceptions\GitHashException;
 use TJVB\GitHash\Values\GitHash;

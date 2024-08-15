@@ -70,6 +70,17 @@ code-style:
   needs:
     - prepare_cache
 
+# We check the content with vale
+vale:
+  image:
+    name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/jdkato/vale
+    entrypoint: [""]
+  stage: check
+  script:
+    - /bin/vale --config=tools/vale/.vale.ini docs README.md
+  needs: []
+  dependencies: []
+
 test_lowest:
   stage: test
   <<: *set_exclude_group

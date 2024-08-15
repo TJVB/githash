@@ -1,0 +1,4 @@
+laravel
+phpstan
+config
+shell_exec

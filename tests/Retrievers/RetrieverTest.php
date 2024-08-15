@@ -11,15 +11,13 @@ use TJVB\GitHash\Tests\Fixtures\GitHashFinderFixture;
 use TJVB\GitHash\Tests\TestCase;
 use TJVB\GitHash\Values\GitHash;
 
-class RetrieverTest extends TestCase
+final class RetrieverTest extends TestCase
 {
     /**
      * @test
      */
     public function byDefaultWeDontHaveAFinderFactory(): void
     {
-        // setup / mock
-
         // run
         $retriever = new Retriever();
 
@@ -50,16 +48,13 @@ class RetrieverTest extends TestCase
      */
     public function weCanNotGetAHashWithoutAFinderFactory(string $method): void
     {
-        // setup / mock
+        // verify/assert
         $this->expectException(GitHashException::class);
         $this->expectExceptionMessage('We can\'t find a hash if we didn\'t got a finder factory');
 
         // run
         $retriever = new Retriever();
         $retriever->$method(self::PROJECT_ROOT);
-
-        // verify/assert
-        // no assertion because we expect the exception
     }
 
     /**
@@ -95,6 +90,10 @@ class RetrieverTest extends TestCase
     public function weGetAnExceptionIfNoneOfTheFindersIsAvailable(string $method): void
     {
         // setup / mock
+        $finder = new GitHashFinderFixture();
+        $finder->available = false;
+
+        // verify/assert
         $this->expectException(GitHashException::class);
         if ($method === 'getHash') {
             $this->expectExceptionMessage('No finder available');
@@ -102,9 +101,6 @@ class RetrieverTest extends TestCase
         if ($method === 'GitHashException') {
             $this->expectExceptionMessage('Unable to find hash');
         }
-
-        $finder = new GitHashFinderFixture();
-        $finder->available = false;
 
         // run
         $factory = new GitHashFinderFactory();
@@ -115,8 +111,6 @@ class RetrieverTest extends TestCase
         $retriever->setFinderFactory($factory);
 
         $retriever->$method(self::PROJECT_ROOT);
-        // verify/assert
-        // no assertion because we expect the exception
     }
 
     /**
@@ -154,7 +148,6 @@ class RetrieverTest extends TestCase
     {
         // setup / mock
         $exception = new GitHashException('test exception');
-        $this->expectExceptionObject($exception);
 
         $gitHash = new GitHash(sha1('test' . rand()));
         $finder1 = new GitHashFinderFixture();
@@ -167,13 +160,14 @@ class RetrieverTest extends TestCase
         $factory->register($finder1);
         $factory->register($finder2);
 
+        // verify/assert
+        $this->expectExceptionObject($exception);
+
         // run
         $retriever = new Retriever();
         $retriever->setFinderFactory($factory);
 
         $retriever->getHash(self::PROJECT_ROOT);
-        // verify/assert
-        // no assertion because we expect the exception
     }
 
     /**
@@ -200,6 +194,7 @@ class RetrieverTest extends TestCase
         $retriever->setFinderFactory($factory);
 
         $result = $retriever->getHashAndIgnoreFailures(self::PROJECT_ROOT);
+
         // verify/assert
         $this->assertEquals($gitHash, $result);
     }

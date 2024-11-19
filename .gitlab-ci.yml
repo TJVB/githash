@@ -87,6 +87,7 @@ infection:
   image: registry.gitlab.com/tjvb/phpimages:php83
   script:
     - composer update
+    - vendor/bin/phpunit --migrate-configuration || true
     - composer infection
   dependencies:
     - prepare_cache

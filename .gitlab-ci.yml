@@ -131,6 +131,7 @@ test:
   <<: *set_exclude_group
   script:
     - composer install
+    - vendor/bin/phpunit --migrate-configuration || true
     - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   coverage:  '/^\s*Lines:\s*\d+.\d+\%/'

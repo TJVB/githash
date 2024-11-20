@@ -214,7 +214,7 @@ final class RetrieverTest extends TestCase
         $this->assertEquals($factory, $retriever->getFinderFactory());
     }
 
-    public function hashMethodsProvider(): array
+    public static function hashMethodsProvider(): array
     {
         return [
             'with failures' => ['getHash'],

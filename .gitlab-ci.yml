@@ -87,6 +87,7 @@ infection:
   image: registry.gitlab.com/tjvb/phpimages:php83
   script:
     - composer update
+    - vendor/bin/phpunit --migrate-configuration || true
     - composer infection
   dependencies:
     - prepare_cache
@@ -126,11 +127,13 @@ test:
           - 81
           - 82
           - 83
+          - 84
   image: registry.gitlab.com/tjvb/phpimages:php$PHP
   <<: *set_exclude_group
   script:
-    - composer install
-    - vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
+    - composer update
+    - vendor/bin/phpunit --migrate-configuration || true
+    - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --colors=never --coverage-cobertura=phpunitresult/cobertura-coverage.xml --log-junit=phpunitresult/junit.xml $EXCLUDE_GROUP
     - sed -i 's~ filename="~ filename="src/~' phpunitresult/cobertura-coverage.xml
   coverage:  '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
